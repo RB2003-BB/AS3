@@ -18,6 +18,7 @@ st.set_page_config(page_title="K-Means Clustering", layout="wide")
 st.title("🔍 K-Means Clustering Visualizer by Rapeepan Srisuwan naja eiei")
 
 # Sidebar slider to select k
+st.sidebar.markdown("Configure Clustering")
 k = st.sidebar.slider("Select number of clusters (k)", min_value=2, max_value=10, value=4)
 
 # Load Iris dataset

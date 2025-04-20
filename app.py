@@ -2,34 +2,49 @@
 """
 Created on Sun Apr 20 16:13:51 2025
 
-@author: LAB
+@author: Rapeepan Srisuwan
 """
 
 import streamlit as st
-import pickle
 import matplotlib.pyplot as plt
-from sklearn.datasets import make_blobs
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
 
-# load model
-with open('kmeans_model.pkl', 'rb') as f:
-    loaded_model = pickle.load(f)
-    
-#set the page config
-st.set_page_config(page_title= "K-Means Clustering", layout = "centered")    
+# Set the page config
+st.set_page_config(page_title="K-Means Clustering", layout="wide")
 
-# set the title
-st.title("K-Means Clustering Visualizer by Rapeepan Srisuwan naja eiei")
+# App title
+st.title("🔍 K-Means Clustering Visualizer by Rapeepan Srisuwan naja eiei")
 
-# load data set
-X, _ = make_blobs(n_samples=300, centers=loaded_model.n_clusters, cluster_std=0.60, random_state=0)
+# Sidebar slider to select k
+k = st.sidebar.slider("Select number of clusters (k)", min_value=2, max_value=10, value=4)
 
-# predict using the loaded model
-y_kmeans = loaded_model.predict(X)
+# Load Iris dataset
+iris = load_iris()
+X = iris.data
 
-#plotting
+# Apply PCA to reduce to 2D for visualization
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
+
+# KMeans clustering
+kmeans = KMeans(n_clusters=k, random_state=42)
+y_kmeans = kmeans.fit_predict(X)
+
+# Plotting
 fig, ax = plt.subplots()
-plt = ax.scatter(X[:, 0], X[:, 1], c=y_kmeans, cmap='viridis')
-ax.scatter(loaded_model.cluster_centers_[:, 0],loaded_model.cluster_centers_[:, 1], s=300, c='red')
-ax.set_title('k-Means Clustering')
+colors = plt.cm.get_cmap('tab10', k)
+
+for cluster in range(k):
+    cluster_points = X_pca[y_kmeans == cluster]
+    ax.scatter(cluster_points[:, 0], cluster_points[:, 1], 
+               label=f'Cluster {cluster}', s=50, alpha=0.7, color=colors(cluster))
+
+ax.set_title("Clusters (2D PCA Projection)")
+ax.set_xlabel("PCA1")
+ax.set_ylabel("PCA2")
 ax.legend()
+
+# Show plot
 st.pyplot(fig)

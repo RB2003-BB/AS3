@@ -17,9 +17,13 @@ st.set_page_config(page_title="K-Means Clustering", layout="wide")
 # App title
 st.title("K-Means Clustering App with Iris Dataset")
 
-# Sidebar slider to select k
-st.sidebar.markdown("Configure Clustering")
-k = st.sidebar.slider("Select number of clusters (k)", min_value=2, max_value=10, value=4)
+# Create two columns
+col1, col2 = st.columns([1, 3])
+
+# Left Column: Controls
+with col1:
+    st.markdown("Configure Clustering")
+    k = st.slider("Select number of clusters (k)", min_value=2, max_value=10, value=4)
 
 # Load Iris dataset
 iris = load_iris()
@@ -33,18 +37,19 @@ X_pca = pca.fit_transform(X)
 kmeans = KMeans(n_clusters=k, random_state=42)
 y_kmeans = kmeans.fit_predict(X)
 
-# Plotting
-fig, ax = plt.subplots(figsize=(6, 4))
-colors = plt.cm.get_cmap('tab10', k)
+# Right Column: Plotting
+with col2:
+    fig, ax = plt.subplots(figsize=(6, 4))
+    colors = plt.cm.get_cmap('tab10', k)
 
-for cluster in range(k):
-    cluster_points = X_pca[y_kmeans == cluster]
-    ax.scatter(cluster_points[:, 0], cluster_points[:, 1], label=f'Cluster {cluster}', s=50, alpha=0.7, color=colors(cluster))
+    for cluster in range(k):
+        cluster_points = X_pca[y_kmeans == cluster]
+        ax.scatter(cluster_points[:, 0], cluster_points[:, 1],
+                   label=f'Cluster {cluster}', s=50, alpha=0.7, color=colors(cluster))
 
-ax.set_title("Clusters (2D PCA Projection)")
-ax.set_xlabel("PCA1")
-ax.set_ylabel("PCA2")
-ax.legend()
+    ax.set_title("Clusters (2D PCA Projection)")
+    ax.set_xlabel("PCA1")
+    ax.set_ylabel("PCA2")
+    ax.legend()
 
-# Show plot
-st.pyplot(fig)
+    st.pyplot(fig)

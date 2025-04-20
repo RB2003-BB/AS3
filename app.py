@@ -34,7 +34,7 @@ kmeans = KMeans(n_clusters=k, random_state=42)
 y_kmeans = kmeans.fit_predict(X)
 
 # Plotting
-fig, ax = plt.subplots(figsize=(6, 4))
+fig, ax = plt.subplots(figsize=(3, 2))
 colors = plt.cm.get_cmap('tab10', k)
 
 for cluster in range(k):

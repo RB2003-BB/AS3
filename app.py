@@ -2,7 +2,7 @@
 """
 Created on Sun Apr 20 16:13:51 2025
 
-@author: Rapeepan Srisuwan
+@author: LAB
 """
 
 import streamlit as st
@@ -15,7 +15,7 @@ from sklearn.decomposition import PCA
 st.set_page_config(page_title="K-Means Clustering", layout="wide")
 
 # App title
-st.title("🔍 K-Means Clustering Visualizer by Rapeepan Srisuwan naja eiei")
+st.title("K-Means Clustering App with Iris Dataset")
 
 # Sidebar slider to select k
 st.sidebar.markdown("Configure Clustering")
@@ -34,13 +34,12 @@ kmeans = KMeans(n_clusters=k, random_state=42)
 y_kmeans = kmeans.fit_predict(X)
 
 # Plotting
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(6, 4))
 colors = plt.cm.get_cmap('tab10', k)
 
 for cluster in range(k):
     cluster_points = X_pca[y_kmeans == cluster]
-    ax.scatter(cluster_points[:, 0], cluster_points[:, 1], 
-               label=f'Cluster {cluster}', s=50, alpha=0.7, color=colors(cluster))
+    ax.scatter(cluster_points[:, 0], cluster_points[:, 1], label=f'Cluster {cluster}', s=50, alpha=0.7, color=colors(cluster))
 
 ax.set_title("Clusters (2D PCA Projection)")
 ax.set_xlabel("PCA1")

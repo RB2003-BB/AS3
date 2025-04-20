@@ -15,7 +15,7 @@ from sklearn.decomposition import PCA
 st.set_page_config(page_title="K-Means Clustering", layout="wide")
 
 # App title
-st.title("K-Means Clustering Visualizer by Rapeepan Srisuwan 6531501105")
+st.title("K-Means Clustering App with Iris Dataset by Rapeepan Srisuwan")
 
 # Sidebar slider to select k
 st.sidebar.markdown("Configure Clustering")

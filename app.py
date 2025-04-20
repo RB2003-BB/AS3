@@ -15,10 +15,9 @@ from sklearn.decomposition import PCA
 st.set_page_config(page_title="K-Means Clustering", layout="wide")
 
 # App title
-st.title("K-Means App with Iris Dataset by Rapeepan Srisuwan 6531501105")
+st.title("🔍 K-Means Clustering Visualizer by Rapeepan Srisuwan naja eiei")
 
 # Sidebar slider to select k
-print("Configure Clustering")
 k = st.sidebar.slider("Select number of clusters (k)", min_value=2, max_value=10, value=4)
 
 # Load Iris dataset

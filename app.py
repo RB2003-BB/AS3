@@ -39,7 +39,7 @@ colors = plt.cm.get_cmap('tab10', k)
 
 for cluster in range(k):
     cluster_points = X_pca[y_kmeans == cluster]
-    ax.scatter(cluster_points[:, 0], cluster_points[:, 1], label=f'Cluster {cluster}', s=20, alpha=0.7, color=colors(cluster))
+    ax.scatter(cluster_points[:, 0], cluster_points[:, 1], label=f'Cluster {cluster}', s=50, alpha=0.7, color=colors(cluster))
 
 ax.set_title("Clusters (2D PCA Projection)")
 ax.set_xlabel("PCA1")

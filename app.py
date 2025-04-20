@@ -14,31 +14,38 @@ from sklearn.decomposition import PCA
 # Set the page config
 st.set_page_config(page_title="K-Means Clustering", layout="wide")
 
-# App title
-st.title("K-Means Clustering App with Iris Dataset")
+# Create two columns with custom widths
+col1, col2 = st.columns([1, 2])
 
-# Create two columns
-col1, col2 = st.columns([1, 3])
-
-# Left Column: Controls
+# Left Column: Controls with gray background
 with col1:
-    st.markdown("Configure Clustering")
+    st.markdown(
+        """
+        <div style="background-color: #f0f0f0; padding: 20px; border-radius: 10px;">
+            <h4>⚙️ Configure Clustering</h4>
+        """,
+        unsafe_allow_html=True
+    )
     k = st.slider("Select number of clusters (k)", min_value=2, max_value=10, value=4)
+    st.markdown("</div>", unsafe_allow_html=True)  # close gray box
 
-# Load Iris dataset
-iris = load_iris()
-X = iris.data
-
-# Apply PCA to reduce to 2D for visualization
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X)
-
-# KMeans clustering
-kmeans = KMeans(n_clusters=k, random_state=42)
-y_kmeans = kmeans.fit_predict(X)
-
-# Right Column: Plotting
+# Right Column: Title and Plot
 with col2:
+    st.title("K-Means Clustering App with Iris Dataset")
+
+    # Load Iris dataset
+    iris = load_iris()
+    X = iris.data
+
+    # Apply PCA to reduce to 2D for visualization
+    pca = PCA(n_components=2)
+    X_pca = pca.fit_transform(X)
+
+    # KMeans clustering
+    kmeans = KMeans(n_clusters=k, random_state=42)
+    y_kmeans = kmeans.fit_predict(X)
+
+    # Plotting
     fig, ax = plt.subplots(figsize=(6, 4))
     colors = plt.cm.get_cmap('tab10', k)
 
